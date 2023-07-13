@@ -1,21 +1,49 @@
-# Parallel Computing
+# Parallel Computing Exercises with OpenMP in C
 
-Welcome to the repository for the Parallel Computing course at Parthenope University! In this repository, you will find a series of exercises solved in C using the OpenMP library. The main goal of this repository is to provide practical and educational examples of parallel computing using OpenMP.
+Welcome to the repository of exercises for university-level parallel computing using the OpenMP library in the C programming language. This repository contains a collection of exercises designed to help you understand and practice parallel computing using OpenMP, a popular library for parallel programming on multiprocessor architectures.
 
-# Repository Structure
+## Description
 
-The repository is organized as follows:
+The exercises in this repository are specifically tailored to enhance your understanding of parallel computing concepts and techniques using OpenMP. Each exercise focuses on a specific aspect of parallelization, allowing you to explore different strategies and optimize your code for improved performance.
 
-The exercises folder contains a series of numbered exercises, each focusing on a specific aspect of parallel computing.
-Each exercise is contained in a separate folder, identified by its exercise number. Inside each exercise folder, you will find the source code in the C programming language and a specific README file for that exercise.
-Each exercise's README file contains a description of the exercise, instructions for compiling and running the code, and detailed explanations of the proposed solutions.
-# How to Use This Repository
+## Getting Started
 
-To use this repository, follow these steps:
+To get started with the exercises, follow these steps:
 
--Clone this repository to your local system using the command git clone <repository URL>.
--Navigate to the folder of the exercise you're interested in using the command cd exercises/<exercise number>.
--Read the exercise's README file for a description of the exercise and instructions on how to compile and run the code.
--Feel free to explore the exercises and learn more about parallel computing with OpenMP!
+1. Clone the repository to your local machine using the command:
+   ```
+   git clone https://github.com/CamillaDeMartino/Parallel-Computing-OpenMP.git
+   ```
 
-Note: It's always a good practice to ensure that you have the necessary dependencies and a suitable development environment set up before attempting to compile and run the code in 
+2. Ensure you have a C compiler installed on your system. OpenMP is supported by most modern compilers, including GCC and Clang.
+
+3. Navigate to the exercise directory of your choice and open the corresponding source code file.
+
+4. Read the exercise description and instructions provided in the source code comments.
+
+5. Implement your solution to the exercise following the guidelines and hints given.
+
+6. Compile the code using the appropriate compiler flags to enable OpenMP support. For example, with GCC, you can use the `-fopenmp` flag:
+   ```
+   gcc exercise.c -o exercise -fopenmp
+   ```
+
+7. Execute the compiled program to observe the results of your parallelized code.
+
+8. Analyze and evaluate the performance improvements achieved through parallelization. Experiment with different configurations and approaches to deepen your understanding.
+
+9. Repeat the process for other exercises in the repository, exploring various parallel computing concepts and techniques.
+
+## Contributing
+
+Contributions to this repository are welcome! If you have additional exercises or improvements to existing ones, please submit a pull request. Be sure to follow the existing structure and guidelines when adding new exercises.
+
+If you encounter any issues or have suggestions for improvement, please open an issue on the repository's issue tracker.
+
+## License
+
+This repository is licensed under the [MIT License](LICENSE). Feel free to use the exercises and code provided for educational purposes or in your own projects.
+
+## Disclaimer
+
+The exercises in this repository are intended for educational purposes only. It is essential to ensure proper understanding and usage of parallel computing concepts to avoid potential issues related to thread synchronization, data race conditions, and other parallelization challenges.
