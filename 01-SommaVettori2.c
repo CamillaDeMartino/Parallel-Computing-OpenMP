@@ -66,5 +66,6 @@ int main () {
 	{
 		printf(" %f", c[i]);
 	}
+	printf("\n");
 	
 }

@@ -1,5 +1,5 @@
 /*
-	Somma di N numeri con N non è esattamente divisibile per p 
+	Somma di N numeri con N non è esattamente divisibile per p (così puòessere generalizzato)
 	con la PRIMA STRATEGIA
 */
 
@@ -36,13 +36,14 @@ int main () {
 	printf("Tempo t0: %lf\n", t0);
 	
 	//parallelo somma tra vettori
-	#pragma omp parallel private(nloc, i, sum, id, step) shared(sumtot, r)		//ognuno di loro calcola la somma di una certa porzione che è quindi privata		
+	#pragma omp parallel private(nloc, i, sum, id, step) shared(a, N, sumtot, r)		//ognuno di loro calcola la somma di una certa porzione che è quindi privata		
 	{
 		t = omp_get_num_threads();					       //numero di thread
-		nloc = N/t;							       //divido il size per il numero di thread, tutti lavorano sullo stesso numero di elementi
+		nloc = N/t;							               //divido il size per il numero di thread, tutti lavorano sullo stesso numero di elementi
 		
 		r = N%t;
 		id = omp_get_thread_num();
+
 		//suddivisione del lavoro tra i thread
 		if(id < r)
 		{
@@ -61,6 +62,7 @@ int main () {
 		}
 		
 		printf("sono %d, di %d: numeri %d, resto=%d, la mia somma=%f\n", omp_get_thread_num(), t, nloc, r, sum);
+		
 		sumtot += sum;
 	}//fine direttiva
 	
