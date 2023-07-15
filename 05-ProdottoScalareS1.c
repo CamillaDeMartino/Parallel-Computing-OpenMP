@@ -20,23 +20,15 @@ int main()
 	b = ( int * )calloc( N, sizeof( int ) );
 	c = ( int * )calloc( N, sizeof( int ) );
 	
-	// Inizializzazione vettore a
+	// Inizializzazione vettore a, b
 	for( i = 0; i < N; i++ )
 	{
+		//a[i] = rand() % 10 + 1;
+		//b[i] = rand() % 10 + 1;
 		a[i] = i+1;
-	}
-
-	// Inizializzazione vettore b
-	for( i = 0; i < N; i++ )
-	{
 		b[i] = i+1;
 	}
-	
-	// Inizializzazione vettore c
-	for( i = 0; i < N; i++ )
-	{
-		c[i] = 0;
-	}
+
 	
 	
 	// Prendiamo il tempo di inizio
@@ -75,6 +67,7 @@ int main()
 	for( i = 0; i < N; i++ )
 	{
 		sum = c[i];
+
 		#pragma omp atomic
 		sumtot += sum;
 	}
@@ -86,5 +79,11 @@ int main()
 	
 	// Stampa Prodotto Scalare
 	printf( "Somma Totale: %d\n", sumtot );
+
+	//buona norma è liberare la memoria
+	free(a);
+	free(b);
+	free(c);
+	
 	return 0;
 }
