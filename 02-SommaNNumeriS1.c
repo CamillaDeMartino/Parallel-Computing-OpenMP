@@ -1,5 +1,5 @@
 /*
-	Somma di N numeri con N non è esattamente divisibile per p (così puòessere generalizzato)
+	Somma di N numeri con N non è esattamente divisibile per p (così può essere generalizzato)
 	con la PRIMA STRATEGIA
 */
 
