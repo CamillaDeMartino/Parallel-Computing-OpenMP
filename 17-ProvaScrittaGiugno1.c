@@ -24,20 +24,14 @@
 #include <omp.h>
 #include <time.h>
 
-void alloc_matrix(int *** matrix, int row, int col);
-void fill_matrix(int ** matrix, int row, int col, int max_element);
-void print_matrix(int ** matrix, int row, int col);
-void dealloc_matrix(int ** matrix, int row);
-void fill_array(int * array, int size, int max_element);
-void print_array(int * array, int size);
 
 int main() {
 	srand(time(NULL));
 
-	double startTime, endTime; // Tempo di inizio e fine del programma
+	double t0, t1, tot_time; // Tempo di inizio e fine del programma
 
-	int ** A; // Matrice A
-	int * a, * b;
+	int ** A, **c; // Matrice A
+	int *b, *max;
 	int N, M; // N = righe, M = colonne
 	int max_element; // Numero massimo generabile all'interno della matrice
 	int np; // Unità processanti
@@ -50,11 +44,113 @@ int main() {
 	scanf("%d", &max_element);
 	printf("Inserire il numero di unità processanti: ");
 	scanf("%d", &np);
+
 	omp_set_num_threads(np);
 
+	max = (int *) calloc(np, sizeof(int));
+	for (int i = 0; i < np; i++) {
+        	max[i] = rand() % max_element;
+    }
 
-    //1
+	b = (int *) calloc(M, sizeof(int));
+	
+	c = (int**) calloc(np,sizeof(int*));
+	for(int i = 0; i < np; i++)
+	{
+		c[i] = (int*) calloc(N/np,sizeof(int));
+	}
+
+    //1-2
+
+	#pragma omp master
+	{
+		for (int i = 0; i < M; i++) {
+        	b[i] = rand() % max_element;
+    	}
+	}
+
+	printf("\nVettore :\n");
+    for (int i = 0; i < M; ++i) {
+        printf("%d ", b[i]);
+    }
+    printf("\n");
+
+	t0 = omp_get_wtime();
+
+	#pragma omp parallel private(A)shared(b, N, M)//num_threads(np)
+	{
+		A = (int**) calloc(N/np,sizeof(int*));
+
+		for (int i = 0; i < N/np; i++) {
+			A[i] = (int*) calloc(M,sizeof(int));
+			for (int j = 0; j < M; j++) {
+				A[i][j] = rand() % max_element;
+			}
+    	}
+
+		int tid = omp_get_thread_num();
+
+		for(int i = 0; i < (N/np); i++){
+			for(int j = 0; j < M; j++){
+
+				c[tid][i] += A[i][j]*b[j];
+			}
+		}
+
+		if(tid != -1)
+       		 printf("Thread: %d\n", tid);
+    	else
+        	printf("Thread\n");
+
+		for(int i=0; i<N/np; i++){
+        	for(int j=0; j<M; j++)
+          	  printf("%d ", A[i][j]);
+        	
+			puts("");
+    	}
+    	puts("");
+
+	}
+
+
+	#pragma omp parallel shared(c, M)
+    {
+        int tid = omp_get_thread_num();
+        max[tid] = c[tid][0];
+        for(int j=0; j<M; j++)
+            if(max[tid] < c[tid][j])
+                max[tid] = c[tid][j];
+    }
+
+	
+	max_element = max[0];
     
+    #pragma omp parallel for reduction(max:max_element)
+    for(int i=1; i<np; i++)
+        if(max_element < max[i])
+            max_element = max[i];
+
+   
+	t1 = omp_get_wtime();
+	tot_time = t1 - t0; 
+
+	printf("\nC: \n");
+	for(int i=0; i<np; i++){
+        for(int j=0; j<N/np; j++)
+            printf("%d ", c[i][j]);
+        puts("");
+    }
+    puts("");
+
+	printf("\nlocal Max: \n");
+	for(int i=0; i<np; i++)
+        printf("%d ", max[i]);
+    puts("");
+
+	printf("\nGlobal Max: %d\n", max_element);
+	printf("\nEXECUTION TIME: %f\n", tot_time);
+
+
     return 0;
 
 }

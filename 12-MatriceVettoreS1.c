@@ -1,3 +1,7 @@
+/**
+ * Startegia 1 per righe
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
